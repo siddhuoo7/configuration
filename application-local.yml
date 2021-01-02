@@ -1,0 +1,57 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+spring:
+  zipkin:
+    enabled: false    
+  jackson:
+    time-zone: Asia/Kolkata
+spring.cloud.stream:
+  kafka:
+    binder:
+      brokers:
+        - localhost:9092
+      min-partition-count: 2
+      auto-add-partitions: true
+      auto-create-topics: true      
+      configuration.auto.offset.reset: earliest  
+  default:
+    producer:
+      partition-key-expression: headers['traceId']
+      partitionCount: 24
+      errorChannelEnabled: true
+     # bufferSize: 33554432 
+      
+    consumer:
+      partitioned: true
+      maxAttempts: 1
+      max-attempts: 1
+      defaultRetryable: false
+  instanceCount : 2
+  instanceIndex : 1
+
+          
+logging:
+  level:
+    root: WARN
+    org:
+      springframework.web: WARN
+      hibernate: WARN
+  
+management:
+  endpoint:
+    info:
+      enabled: true
+    health:
+      show-details: always
+  health:
+    probes:
+      enabled: true  
+    binders:
+      enabled: true  
+
+zeebe:
+  client:
+    broker:
+      contactPoint: "127.0.0.1:26500"

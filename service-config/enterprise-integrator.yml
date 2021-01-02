@@ -1,0 +1,90 @@
+server:
+  port: 8060
+spring:
+  application:
+    name: enterprise-integrator
+  data:
+    mongodb:
+      authentication-database: admin
+      database: integrator-messages
+      host: mongo
+      password: Ecssupport09
+      port: 27017
+      username: admin
+  datasource:
+    initialization-mode: always
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/pymtresp
+    username: postgres
+    password: admin
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate.jdbc.lob.non_contextual_creation: true
+      hibernate.default_schema: msgdb
+ 
+  cloud:
+    stream:
+     bindings:
+       pacs-cct-in:
+        destination: pacs.cct
+        consumer.concurrency: 8
+        group: ${spring.application.name}
+       pacs-cct-out:
+        destination: pacs.cct
+        group: ${spring.application.name}
+       acc-enq-in:
+        destination: acc.enq
+        consumer.concurrency: 8
+        group: ${spring.application.name}
+       acc-enq-out:
+        destination: acc.enq
+        group: ${spring.application.name}
+       message-out:
+        destination: messages
+        #producer:
+        #    partition-key-expression: headers['traceId']
+        #    partition-count: 16
+        group: ${spring.application.name}
+       message-in:
+        destination: messages
+        group: ${spring.application.name}
+        
+timeOutSec: 20
+slpTimeinMS: 1000
+---
+spring:
+  profiles: jpa
+  data:
+    mongodb:
+      host: localhost
+      repositories:
+        type: none
+  autoconfigure:
+    exclude: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration"
+
+---
+spring:
+  profiles: mongodb
+  autoconfigure:
+    exclude: "org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration,org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration,org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration"
+  data:
+    jpa:
+      repositories:
+        enabled: false
+
+---
+spring:
+  profiles: local
+  autoconfigure:
+    exclude: "org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration,org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration,org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration"
+  data:
+    jpa:
+      repositories:
+        enabled: false
+    mongodb:
+      host: localhost        
+

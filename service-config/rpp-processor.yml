@@ -1,0 +1,242 @@
+server:
+  port: 8065
+spring:
+  application:
+    name: rpp-processor
+  data:
+    mongodb:
+      authentication-database: admin
+      database: rpp-messages
+      host: mongo
+      password: Ecssupport09
+      port: 27017
+      username: admin
+spring.cloud.stream:
+  bindings:
+    rpp-messages-out:
+      destination: rpp.messages
+      group: ${spring.application.name}
+    rpp-messages-in:
+      destination: rpp.messages
+      consumer.concurrency: 8
+      group: ${spring.application.name}
+    pacs-cct-in:
+      destination: pacs.cct
+      consumer.concurrency: 8
+      group: ${spring.application.name}
+    pacs-cct-out:
+      destination: pacs.cct
+      group: ${spring.application.name}
+    acc-enq-in:
+      destination: acc.enq
+      consumer.concurrency: 8
+      group: ${spring.application.name}
+    acc-enq-out:
+      destination: acc.enq
+      group: ${spring.application.name}
+    admn-echo-in:
+      destination: admn.echo
+      consumer.concurrency: 8
+      group: ${spring.application.name}
+    admn-echo-out:
+      destination: admn.echo
+      group: ${spring.application.name}
+    admn-signin-in:
+      destination: admn.signin
+      consumer.concurrency: 8
+      group: ${spring.application.name}
+    admn-signin-out:
+      destination: admn.signin
+      group: ${spring.application.name}
+    admn-signout-in:
+      destination: admn.signout
+      consumer.concurrency: 8
+      group: ${spring.application.name}
+    admn-signout-out:
+      destination: admn.signout
+      group: ${spring.application.name}
+  
+zeebe:
+  bpmn:
+    echo:
+      file: rpp-outbound-echo.bpmn
+      processId: EchoWorkflow
+  job.subscribe.timeout: 1L
+  
+
+rpp:
+  connector:
+    connections:
+      - id: 1
+        host: 192.168.45.24
+        port: 9000
+        noOfRetries: 3
+        retryInterval: 10000
+        connectionName: Primary Connection
+        order: 1
+        enable: true
+      - id: 2
+        host: 192.168.45.24
+        port: 9002
+        noOfRetries: 3
+        retryInterval: 10000
+        connectionName: Secondary Connection
+        order: 2
+        enable: true
+    loadBalancing: false
+  member:
+    bank.id: ARBKMYKL
+    centralbank.id: RPPEMYKL
+
+---
+spring:
+  profiles: local
+  data:
+    mongodb:
+      host: localhost
+
+spring.cloud.stream:
+  kafka:
+    binder:
+      brokers:
+        - localhost:9092
+        
+rpp:
+  connector:
+    connections:
+      - id: 1
+        host: localhost
+        port: 9001
+        order: 1
+        enable: true
+      - id: 2
+        host: 192.168.65.116
+        port: 9000
+        order: 2
+        enable: true
+    loadBalancing: false
+ 
+---
+spring:
+  profiles: platform
+      
+rpp:
+  connector:
+    connections:
+      - id: 1
+        host: 192.168.45.24
+        port: 9000
+        order: 1
+        enable: true
+      - id: 2
+        host: 192.168.45.24
+        port: 9000
+        order: 2
+        enable: true
+    loadBalancing: false      
+---
+spring:
+  profiles: dev
+  
+rpp:
+  connector:
+    connections:
+      - id: 1
+        host: 192.168.45.24
+        port: 9001
+        order: 1
+        enable: true
+      - id: 2
+        host: 192.168.45.24
+        port: 9001
+        order: 2
+        enable: true
+    loadBalancing: false
+
+---    
+spring:
+  profiles: qa
+  
+rpp:
+  connector:
+    connections:
+      - id: 1
+        host: 172.27.11.131
+        port: 9002
+        order: 1
+        enable: true
+      - id: 2
+        host: 172.27.11.131
+        port: 9000
+        order: 2
+        enable: true
+    loadBalancing: false    
+    
+---    
+spring:
+  profiles: demo
+  
+rpp:
+  connector:
+    connections:
+      - id: 1
+        host: 172.27.11.131
+        port: 9002
+        order: 1
+        enable: true
+      - id: 2
+        host: 172.27.11.131
+        port: 9000
+        enable: true
+    loadBalancing: false    
+    
+---
+spring:
+  profiles: platform
+  data:
+    mongodb:
+      host: 192.168.45.26
+      port: 27017
+---
+spring:
+  profiles: ofi_dev
+  data:
+    mongodb:
+      host: 192.168.45.26
+      port: 27018
+---
+spring:
+  profiles: rfi_dev
+  data:
+    mongodb:
+      host: 192.168.45.26
+      port: 27019
+---
+spring:
+  profiles: ofi_qa
+  data:
+    mongodb:
+      host: 172.27.11.139    
+      port: 27017
+---
+spring:
+  profiles: rfi_qa
+  data:
+    mongodb:
+      host: 172.27.11.139
+      port: 27018
+---
+spring:
+  profiles: ofi_demo
+  data:
+    mongodb:
+      host: 172.27.11.139
+      port: 27019
+      
+---
+spring:
+  profiles: rfi_demo
+  data:
+    mongodb:
+      host: 172.27.11.139
+      port: 27020

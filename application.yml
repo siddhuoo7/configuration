@@ -1,0 +1,152 @@
+spring:
+  main.banner-mode: off 
+  output.ansi.enabled: ALWAYS
+  sleuth: 
+    sampler: 
+      probability: 1.0
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+    time-zone: America/New_York
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: kafka:9092
+          autoAddPartitions: true
+          headers: type
+          configuration:
+            "linger.ms": 150
+            "buffer.memory": 19404000
+            "batch.size": 194040
+            "compression.type": "gzip"
+            "receive.buffer.bytes": 19404000
+      default:
+        producer:
+          #partitionKeyExpression: headers['traceId']
+          partitionCount: 16
+          errorChannelEnabled: true
+        consumer:
+          partitioned: true
+          maxAttempts: 1
+          defaultRetryable: false
+          headerMode: headers
+logging:
+  level:
+    root: WARN
+    org:
+      springframework.web: WARN
+      hibernate: WARN
+eureka:
+  instance:
+    preferIpAddress: true
+    hostname: discovery-service
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://discovery-server:8761/eureka}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    info:
+      enabled: true
+    shutdown:
+      enabled: true      
+    health:
+      show-details: always
+  health:
+    probes:
+      enabled: true  
+    binders:
+      enabled: true  
+      
+company:
+  contact:
+    name: "ECSFin"
+    url: "www.ecsfin.com"
+    email: "info@ecsfin.com"
+  license: "Copyright © 2020. ECS Fin. All Rights Reserved."
+  termsOfService:
+    url: "https://ecsfin.com/about-us/our-vision/"
+    
+springdoc:
+  version: '@springdoc.version@'
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    path: /docs.html
+    displayRequestDuration: true
+    tagsSorter: alpha
+    display-query-params-without-oauth2: true
+  cache:
+    disabled: true
+    
+zeebe:
+  client:
+    broker:
+      contactPoint: "zeebe:26500"
+    security:
+      plaintext: true
+    worker:
+      defaultName: worker-name
+    cluster:
+      replicationFactor: 1
+      partitionsCount: 5
+    threads:
+      cpuThreadCount: 1
+      ioThreadCount: 1
+      
+---
+spring:
+  profiles: platform
+  data:
+    mongodb:
+      host: 192.168.45.26
+      port: 27017
+---
+spring:
+  profiles: ofi_dev
+  data:
+    mongodb:
+      host: 192.168.45.26
+      port: 27018
+---
+spring:
+  profiles: rfi_dev
+  data:
+    mongodb:
+      host: 192.168.45.26
+      port: 27019
+---
+spring:
+  profiles: ofi_qa
+  data:
+    mongodb:
+      host: 172.27.11.139      
+      port: 27017
+---
+spring:
+  profiles: rfi_qa
+  data:
+    mongodb:
+      host: 172.27.11.139
+      port: 27018
+---
+spring:
+  profiles: ofi_demo
+  data:
+    mongodb:
+      host: 172.27.11.139
+      port: 27019
+      
+---
+spring:
+  profiles: rfi_demo
+  data:
+    mongodb:
+      host: 172.27.11.139
+      port: 27020

@@ -1,0 +1,49 @@
+server:
+  port: 8849
+spring:
+  application:
+    name: message-query
+  data:
+    mongodb:
+      authentication-database: admin
+      database: message-query
+      host: mongo
+      password: Ecssupport09
+      port: 27017
+      username: admin
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: false
+spring.cloud.stream.bindings:
+  message-in:
+    destination: messages
+    consumer.concurrency: 8
+    group: ${spring.application.name}    
+  rpp-messages-in:
+    destination: rpp.messages
+    consumer.concurrency: 8
+    group: ${spring.application.name}
+
+management:
+  metrics:
+    export:
+      elastic:
+        step: 30s
+        host: http://elasticsearch-master.workflow.svc.cluster.local:9200
+
+elasticsearch:
+  connection.url: elasticsearch-master.workflow.svc.cluster.local:9200
+  
+notify.threshold: 1000
+---
+spring:
+  profiles: local
+  data:
+    mongodb:
+      host: localhost
+elasticsearch:
+  connection.url: localhost:9200
+
+notify.threshold: 4

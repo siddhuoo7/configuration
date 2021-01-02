@@ -1,0 +1,36 @@
+server:
+  port: 8846
+spring:
+  application:
+    name: rpp-query
+  data:
+    mongodb:
+      authentication-database: admin
+      database: rpp-query
+      host: mongo
+      password: Ecssupport09
+      port: 27017
+      username: admin
+spring.cloud.stream.bindings:
+  admn-echo-in:
+    destination: admn.echo
+    consumer.concurrency: 3
+    concurrency: 3
+    group: ${spring.application.name}
+  admn-signin-in:
+    destination: admn.signin
+    consumer.concurrency: 3
+    concurrency: 3
+    group: ${spring.application.name} 
+  admn-signout-in:
+    destination: admn.signout
+    consumer.concurrency: 3
+    concurrency: 3
+    group: ${spring.application.name} 
+
+---
+spring:
+  profiles: local
+  data:
+    mongodb:
+      host: localhost

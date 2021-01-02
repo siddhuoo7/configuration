@@ -1,0 +1,36 @@
+server:
+  port: 8899
+spring:
+  application:
+    name: pacs-service
+  data:
+    mongodb:
+      authentication-database: admin
+      database: pacs-cct
+      host: mongo
+      password: Ecssupport09
+      port: 27017
+      username: admin
+spring.cloud.stream.bindings:
+  pacs-cct-in:
+    destination: pacs.cct
+    consumer.concurrency: 8
+    group: ${spring.application.name}
+  pacs-cct-out:
+    destination: pacs.cct
+    group: ${spring.application.name}
+zeebe:
+  bpmn:
+    cct:
+      file: outbound-CCT.bpmn
+      processId: InitiateCCT
+pacs:
+  cct:
+    suppldata:
+      validator: RPP
+---
+spring:
+  profiles: local
+  data:
+    mongodb:
+      host: localhost
