@@ -87,4 +87,14 @@ spring:
         enabled: false
     mongodb:
       host: localhost        
+---
+spring:
+  profiles: rfi_qa
+mongo:
+  sharding: false
+---
+spring:
+  profiles: ofi_qa
+mongo:
+  sharding: false
 
