@@ -162,7 +162,7 @@ rpp:
     connections:
       - id: 1
         host: 172.27.11.131
-        port: 9002
+        port: 9001
         order: 1
         enable: true
       - id: 2
@@ -180,12 +180,12 @@ rpp:
   connector:
     connections:
       - id: 1
-        host: 172.27.11.131
+        host: 172.27.11.121
         port: 9002
         order: 1
         enable: true
       - id: 2
-        host: 172.27.11.131
+        host: 172.27.11.121
         port: 9000
         enable: true
     loadBalancing: false    
