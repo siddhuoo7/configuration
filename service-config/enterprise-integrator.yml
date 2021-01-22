@@ -55,6 +55,8 @@ spring:
         
 timeOutSec: 20
 slpTimeinMS: 1000
+mongo:
+  sharding: false
 ---
 spring:
   profiles: jpa
@@ -86,15 +88,5 @@ spring:
       repositories:
         enabled: false
     mongodb:
-      host: localhost        
----
-spring:
-  profiles: rfi_qa
-mongo:
-  sharding: false
----
-spring:
-  profiles: ofi_qa
-mongo:
-  sharding: false
+      host: localhost
 
