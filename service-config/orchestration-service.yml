@@ -1,0 +1,87 @@
+server:
+  port: 9595
+logging:
+  level:
+    com:
+      ecsfin:
+        workflow: DEBUG
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  cct:
+    outbound:
+      timeout: 5000
+    inbound:
+      timeout: 5000
+  actenq:
+    outbound:
+      timeout: 20000
+    inbound:
+      timeout: 20000
+  echo:
+    outbound:
+      timeout: 20000
+    max:
+      attempts: 3
+  cloud:
+    stream:
+      bindings:
+        pacs-cct-out:
+          destination: pacs.cct
+          group: ${spring.application.name}
+        pacs-cct-in:
+          destination: pacs.cct
+          group: ${spring.application.name}
+          consumer.concurrency: 8
+        acc-enq-out:
+          destination: acc.enq
+          group: ${spring.application.name}
+        acc-enq-in:
+          destination: acc.enq
+          group: ${spring.application.name}
+          consumer.concurrency: 8
+        admn-echo-out:
+          destination: admn.echo
+          group: ${spring.application.name}
+        admn-echo-in:
+          destination: admn.echo
+          consumer.concurrency: 8
+          group: ${spring.application.name}
+        admn-signin-in:
+          destination: admn.signin
+          consumer.concurrency: 8
+          group: ${spring.application.name}
+        admn-signin-out:
+          destination: admn.signin
+          group: ${spring.application.name}
+        admn-signout-in:
+          destination: admn.signout
+          consumer.concurrency: 8
+          group: ${spring.application.name}
+        admn-signout-out:
+          destination: admn.signout
+          group: ${spring.application.name}
+  redis:
+    host: redis
+    port: 6379
+    password:
+    lettuce:
+      shutdown-timeout: 200ms
+      pool:
+        max-active: 5
+        max-idle: 5
+        min-idle: 2
+        max-wait: -1ms
+---
+spring:
+  profiles: local
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+  redis:
+    host: 192.168.45.23
+    port: 6379
+    password: 
+
