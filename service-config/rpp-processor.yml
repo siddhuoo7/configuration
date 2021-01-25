@@ -26,9 +26,6 @@ spring.cloud.stream:
       producer:
         partition-key-expression: headers['traceId']
         partition-count: 16
-        #configuration:
-        #  compression:
-        #    type: snappy
     rpp-messages-in:
       destination: rpp.messages
       consumer.concurrency: 8
@@ -81,8 +78,8 @@ rpp:
   connector:
     connections:
       - id: 1
-        host: 192.168.45.24
-        port: 9000
+        host: 10.244.133.104
+        port: 9002
         noOfRetries: 3
         retryInterval: 10000
         connectionName: Primary Connection
@@ -128,88 +125,3 @@ rpp:
         order: 2
         enable: true
     loadBalancing: false
- 
----
-spring:
-  profiles: platform
-      
-rpp:
-  connector:
-    connections:
-      - id: 1
-        host: 192.168.45.24
-        port: 9000
-        order: 1
-        enable: true     
----
-spring:
-  profiles: ofi_dev
-  
-rpp:
-  connector:
-    connections:
-      - id: 1
-        host: 192.168.45.24
-        port: 9001
-        order: 1
-        enable: true
----
-spring:
-  profiles: rfi_dev
-  
-rpp:
-  connector:
-    connections:
-      - id: 1
-        host: 192.168.45.24
-        port: 9001
-        order: 1
-        enable: true
----    
-spring:
-  profiles: ofi_qa
-  
-rpp:
-  connector:
-    connections:
-      - id: 1
-        host: 172.27.11.131
-        port: 9000
-        order: 1
-        enable: true   
----    
-spring:
-  profiles: rfi_qa
- 
-rpp:
-  connector:
-    connections:
-      - id: 1
-        host: 172.27.11.131
-        port: 9001
-        order: 1
-        enable: true
----    
-spring:
-  profiles: ofi_demo
-  
-rpp:
-  connector:
-    connections:
-      - id: 1
-        host: 172.27.11.121
-        port: 9000
-        order: 1
-        enable: true
----    
-spring:
-  profiles: rfi_demo
-  
-rpp:
-  connector:
-    connections:
-      - id: 1
-        host: 172.27.11.121
-        port: 9001
-        order: 1
-        enable: true
