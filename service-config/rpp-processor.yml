@@ -78,7 +78,7 @@ rpp:
   connector:
     connections:
       - id: 1
-        host: 10.244.133.104
+        host: 52.152.230.42
         port: 9002
         noOfRetries: 3
         retryInterval: 10000
@@ -86,8 +86,8 @@ rpp:
         order: 1
         enable: true
       - id: 2
-        host: 192.168.45.24
-        port: 9002
+        host: 52.152.230.42
+        port: 9000
         noOfRetries: 3
         retryInterval: 10000
         connectionName: Secondary Connection
