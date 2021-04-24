@@ -1,16 +1,18 @@
 server:
   port: 8849
+# logging:
+#   level:
+#     com:
+#       ecsfin:
+#         service:
+#           message:
+#             query: INFO
 spring:
   application:
     name: message-query
   data:
     mongodb:
-      authentication-database: admin
       database: message-query
-      host: mongo
-      password: Ecssupport09
-      port: 27017
-      username: admin
   cloud:
     config:
       allowOverride: true
@@ -20,7 +22,7 @@ spring.cloud.stream.bindings:
   message-in:
     destination: messages
     consumer.concurrency: 8
-    group: ${spring.application.name}    
+    group: ${spring.application.name}
   rpp-messages-in:
     destination: rpp.messages
     consumer.concurrency: 8
@@ -37,6 +39,12 @@ elasticsearch:
   connection.url: elasticsearch-master.workflow.svc.cluster.local:9200
   
 notify.threshold: 1000
+
+eureka:
+ instance:
+   metadataMap:
+     "prometheus.scrape": "true"
+     "prometheus.path": "/actuator/prometheus"
 ---
 spring:
   profiles: local
@@ -47,3 +55,16 @@ elasticsearch:
   connection.url: localhost:9200
 
 notify.threshold: 4
+
+---
+spring:
+  profiles: platform
+  data:
+    mongodb:
+      #host: 192.168.65.137
+      #port: 60000
+      
+---
+notification:
+  email: siddharthajay189@gmail.com, abhilash.as@m.ecsfin.com, midhunnair.sk@m.ecsfin.com
+  noReplyAddress: eventnotify.ecsfin@gmail.com
