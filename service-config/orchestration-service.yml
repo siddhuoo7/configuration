@@ -4,10 +4,9 @@ logging:
   level:
     com:
       ecsfin:
-        workflow: DEBUG
-spring:
-  main:
-    allow-bean-definition-overriding: true
+        workflow:
+          cct.inbound: DEBUG
+workflow:
   cct:
     outbound:
       timeout: 5000
@@ -15,14 +14,19 @@ spring:
       timeout: 5000
   actenq:
     outbound:
-      timeout: 20000
+      timeout: 5000
     inbound:
-      timeout: 20000
+      timeout: 5000
   echo:
     outbound:
       timeout: 20000
     max:
       attempts: 3
+spring:
+  application:
+    name: orchestration-service
+  main:
+    allow-bean-definition-overriding: true
   cloud:
     stream:
       bindings:
@@ -61,27 +65,29 @@ spring:
         admn-signout-out:
           destination: admn.signout
           group: ${spring.application.name}
-  redis:
-    host: redis
-    port: 6379
-    password:
-    lettuce:
-      shutdown-timeout: 200ms
-      pool:
-        max-active: 5
-        max-idle: 5
-        min-idle: 2
-        max-wait: -1ms
----
-spring:
-  profiles: local
-  cloud:
-    stream:
-      kafka:
-        binder:
-          brokers: localhost:9092
-  redis:
-    host: 192.168.45.23
-    port: 6379
-    password: 
-
+        orch-cct-in:
+          destination: orch.cct
+          group: ${spring.application.name}
+          consumer.concurrency: 8
+        orch-cct-out:
+          destination: orch.cct
+          group: ${spring.application.name}
+        orch-enq-in:
+          destination: orch.enq
+          group: ${spring.application.name}
+          consumer.concurrency: 8
+        orch-enq-out:
+          destination: orch.enq
+          group: ${spring.application.name}
+        orch-echo-in:
+          destination: orch.echo
+          consumer.concurrency: 8
+          group: ${spring.application.name}
+        orch-signin-in:
+          destination: orch.signin
+          consumer.concurrency: 8
+          group: ${spring.application.name}
+        orch-signout-in:
+          destination: orch.signout
+          consumer.concurrency: 8
+          group: ${spring.application.name}
