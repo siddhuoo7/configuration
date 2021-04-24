@@ -46,7 +46,7 @@ spring:
       default:
         producer:
           partitionKeyExpression: headers['traceId']
-          partitionCount: 24
+          partitionCount: 16
           errorChannelEnabled: true
           headerMode: headers
         consumer:
