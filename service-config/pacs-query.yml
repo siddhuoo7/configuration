@@ -1,16 +1,18 @@
 server:
   port: 8898
+# logging:
+#   level:
+#     com:
+#       ecsfin:
+#         service:
+#           pacs:
+#             query: INFO
 spring:
   application:
     name: pacs-query
   data:
     mongodb:
-      authentication-database: admin
       database: pacs-query
-      host: mongo
-      password: Ecssupport09
-      port: 27017
-      username: admin
 spring.cloud.stream.bindings:
   pacs-cct-in:
     destination: pacs.cct
@@ -21,7 +23,7 @@ message:
   service:
     ip: message-query
     port: 8849  
-    
+
 ---
 spring:
   profiles: local
