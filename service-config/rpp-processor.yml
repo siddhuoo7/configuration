@@ -114,24 +114,7 @@ rpp:
       recoTimeout: 5000
     clearCache:
       expiryTime: 300
-      fixed-rate-scheduler: 30000
----
-spring:
-  profiles: local     
-rpp:
-  connector:
-    connections:
-      - id: 1
-        host: localhost
-        port: 9002
-        order: 1
-        enable: true
-      - id: 2
-        host: 192.168.65.116
-        port: 9000
-        order: 2
-        enable: true
-    loadBalancing: false    
+      fixed-rate-scheduler: 30000  
 ---    
 spring:
   profiles: ofi_qa
@@ -139,10 +122,16 @@ rpp:
   connector:
     connections:
       - id: 1
-        host: 172.27.11.131
+        host: 40.76.236.205
         port: 9000
         order: 1
-        enable: true   
+        enable: true
+      - id: 2
+        host: 40.76.237.71
+        port: 9002
+        order: 2
+        enable: true
+    loadBalancing: true        
 ---    
 spring:
   profiles: rfi_qa
@@ -150,8 +139,13 @@ rpp:
   connector:
     connections:
       - id: 1
-        host: 172.27.11.131
+        host: 40.76.236.205
         port: 9001
         order: 1
         enable: true
----    
+      - id: 2
+        host: 40.76.237.71
+        port: 9003
+        order: 2
+        enable: true
+    loadBalancing: true        
