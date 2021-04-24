@@ -1,5 +1,12 @@
 server:
   port: 8846
+# logging:
+#   level:
+#     com:
+#       ecsfin:
+#         service:
+#           rpp:
+#             query: INFO
 spring:
   application:
     name: rpp-query
