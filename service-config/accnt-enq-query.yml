@@ -1,5 +1,12 @@
 server:
   port: 8850
+logging:
+  level:
+     com:
+      ecsfin:
+         service:
+          accnt_enq:
+             query: INFO
 spring:
   application:
     name: accnt-enq-query
@@ -11,6 +18,12 @@ spring:
       password: Ecssupport09
       port: 27017
       username: admin
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: false
+
 spring.cloud.stream:
   bindings:
     acc-enq-out:
@@ -18,13 +31,14 @@ spring.cloud.stream:
       group: ${spring.application.name}
     acc-enq-in:
       destination: acc.enq
-      consumer.concurrency: 3
+      consumer.concurrency: 8
       group: ${spring.application.name}
       
 message:
   service:
     ip: message-query
-    port: 8849  
+    port: 8849 
+
     
 ---
 spring:
@@ -36,3 +50,59 @@ message:
   service:
     ip: localhost
     port: 8849
+    
+---
+spring:
+  profiles: platform
+message:
+  service:
+    ip: 192.168.45.11
+    port: 30849
+    
+---
+spring:
+  profiles: ofi_dev
+message:
+  service:
+    ip: 192.168.45.15
+    port: 30849
+    
+---
+spring:
+  profiles: rfi_dev
+message:
+  service:
+    ip: 192.168.45.19
+    port: 30849
+    
+---
+spring:
+  profiles: ofi_qa
+message:
+  service:
+    ip: 172.27.11.131
+    port: 30849
+    
+---
+spring:
+  profiles: rfi_qa
+message:
+  service:
+    ip: 172.27.11.135
+    port: 30849
+    
+---
+spring:
+  profiles: ofi_demo
+message:
+  service:
+    ip: 172.27.11.81
+    port: 30849
+      
+---
+spring:
+  profiles: rfi_demo
+message:
+  service:
+    ip: 172.27.11.121
+    port: 30849
