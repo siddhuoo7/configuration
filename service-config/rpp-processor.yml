@@ -131,52 +131,7 @@ rpp:
         port: 9000
         order: 2
         enable: true
-    loadBalancing: false
----
-spring:
-  profiles: platform
-rpp:
-  connector:
-    connections:
-      - id: 1
-        host: 192.168.45.11
-        port: 9002
-        order: 1
-        enable: true     
----
-spring:
-  profiles: ofi_dev
-rpp:
-  connector:
-    connections:
-      - id: 1
-        host: 192.168.45.24
-        port: 9000
-        order: 1
-        enable: true
-      - id: 2
-        host: 192.168.45.24
-        port: 9002
-        order: 2
-        enable: true
-    loadBalancing: true        
----
-spring:
-  profiles: rfi_dev
-rpp:
-  connector:
-    connections:
-      - id: 1
-        host: 192.168.45.24
-        port: 9001
-        order: 1
-        enable: true
-      - id: 2
-        host: 192.168.45.24
-        port: 9003
-        order: 2
-        enable: true
-    loadBalancing: true        
+    loadBalancing: false    
 ---    
 spring:
   profiles: ofi_qa
@@ -200,24 +155,3 @@ rpp:
         order: 1
         enable: true
 ---    
-spring:
-  profiles: ofi_demo
-rpp:
-  connector:
-    connections:
-      - id: 1
-        host: 172.27.11.121
-        port: 9000
-        order: 1
-        enable: true
----    
-spring:
-  profiles: rfi_demo
-rpp:
-  connector:
-    connections:
-      - id: 1
-        host: 172.27.11.121
-        port: 9001
-        order: 1
-        enable: true
