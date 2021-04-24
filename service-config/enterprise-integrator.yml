@@ -1,31 +1,36 @@
 server:
   port: 8060
+logging:
+  level:
+    com:
+      ecsfin:
+        service:
+          enterprise:
+            integrator: ERROR
 spring:
   application:
     name: enterprise-integrator
   data:
     mongodb:
-      authentication-database: admin
       database: integrator-messages
-      host: mongo
-      password: Ecssupport09
-      port: 27017
-      username: admin
+    jpa:
+      repositories:
+        enabled: false      
   datasource:
     initialization-mode: always
     platform: postgres
-    url: jdbc:postgresql://localhost:5432/pymtresp
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: admin
-
+    password: Ecssupport09
+  #autoconfigure:
+  #  exclude: "org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration,org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration,org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration"
   jpa:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate.jdbc.lob.non_contextual_creation: true
-      hibernate.default_schema: msgdb
- 
+      #hibernate.default_schema: intgdb
   cloud:
     stream:
      bindings:
@@ -45,9 +50,8 @@ spring:
         group: ${spring.application.name}
        message-out:
         destination: messages
-        #producer:
-        #    partition-key-expression: headers['traceId']
-        #    partition-count: 16
+        producer:
+          partition-key-expression: headers['traceId']
         group: ${spring.application.name}
        message-in:
         destination: messages
@@ -55,8 +59,34 @@ spring:
         
 timeOutSec: 20
 slpTimeinMS: 1000
-mongo:
-  sharding: false
+
+eai:
+  urls:
+    urlDetails:
+      - id: 1
+        creditorAccountType: CCRD
+        url: http://192.168.65.91:7010/mockRACE_SOA_ACCTINFO_getDepAcctBalance_webservices_getDepAcctBalance_Binder?wsdl
+        soapAction: RACE_SOA_ACCTINFO_getDepAcctBalance_webservices_getDepAcctBalance_Binder_getAcctBalanceCA
+      - id: 2
+        creditorAccountType: SVGS
+        url: http://192.168.65.91:7010/mockRACE_SOA_ACCTINFO_getDepAcctBalance_webservices_getDepAcctBalance_Binder?wsdl
+        soapAction: RACE_SOA_ACCTINFO_getDepAcctBalance_webservices_getDepAcctBalance_Binder_getAcctBalanceCA
+      - id: 3
+        creditorAccountType: LOAN
+        url: http://192.168.65.91:7011/mockRACE_SOA_ACCTINFO_enquireLoanBalance_webservices_provider_wsEnquireLoanBalanceSvc_Binder?wsdl
+        soapAction: RACE_SOA_ACCTINFO_enquireLoanBalance_webservices_provider_wsEnquireLoanBalanceSvc_Binder_enquireLoanBalance
+      - id: 4
+        creditorAccountType: CACC
+        url: http://192.168.65.91:7010/mockRACE_SOA_ACCTINFO_getDepAcctBalance_webservices_getDepAcctBalance_Binder?wsdl
+        soapAction: RACE_SOA_ACCTINFO_getDepAcctBalance_webservices_getDepAcctBalance_Binder_getAcctBalanceCA
+      - id: 5
+        creditorAccountType: FUND
+        url: http://192.168.65.91:7018/mockRACE_SOA_PAYMENT_fundsTransfer_webservices_wsFundsTransferSvc_Binder?wsdl
+        soapAction: RACE_SOA_PAYMENT_fundsTransfer_webservices_wsFundsTransferSvc_Binder_fundsTransfer
+      - id: 6
+        creditorAccountType: FCRD
+        url: http://192.168.65.91:7019/mockRACE_SOA_PAYMENT_fpxLcaRefund_webservices_provider_wsFpxLcaRefundSvc_Binder?wsdl
+        soapAction: RACE_SOA_PAYMENT_fpxLcaRefund_webservices_provider_wsFpxLcaRefundSvc_Binder_fpxLcaRefund
 ---
 spring:
   profiles: jpa
@@ -67,26 +97,63 @@ spring:
         type: none
   autoconfigure:
     exclude: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration"
-
----
-spring:
-  profiles: mongodb
-  autoconfigure:
-    exclude: "org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration,org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration,org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration"
-  data:
-    jpa:
-      repositories:
-        enabled: false
-
 ---
 spring:
   profiles: local
-  autoconfigure:
-    exclude: "org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration,org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration,org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration"
-  data:
-    jpa:
-      repositories:
-        enabled: false
-    mongodb:
-      host: localhost
-
+mongo:
+  sharding: false  
+---
+spring:
+  profiles: rfi_qa
+mongo:
+  sharding: false
+---
+spring:
+  profiles: ofi_qa
+mongo:
+  sharding: false
+---
+spring:
+  profiles: platform
+mongo:
+  sharding: false
+---
+spring:
+  profiles: ofi_demo
+mongo:
+  sharding: false
+---
+spring:
+  profiles: rfi_demo
+mongo:
+  sharding: false
+---
+spring:
+  profiles: rfi_demo,ofi_demo,ofi_qa,rfi_qa
+eai:
+  urls:
+    urlDetails:
+      - id: 1
+        creditorAccountType: CCRD
+        url: http://172.27.11.150:3032/mockRACE_SOA_ACCTINFO_getDepAcctBalance_webservices_getDepAcctBalance_Binder?wsdl
+        soapAction: RACE_SOA_ACCTINFO_getDepAcctBalance_webservices_getDepAcctBalance_Binder_getAcctBalanceCA
+      - id: 2
+        creditorAccountType: SVGS
+        url: http://172.27.11.150:3032/mockRACE_SOA_ACCTINFO_getDepAcctBalance_webservices_getDepAcctBalance_Binder?wsdl
+        soapAction: RACE_SOA_ACCTINFO_getDepAcctBalance_webservices_getDepAcctBalance_Binder_getAcctBalanceCA
+      - id: 3
+        creditorAccountType: LOAN
+        url: http://172.27.11.150:3032/mockRACE_SOA_ACCTINFO_enquireLoanBalance_webservices_provider_wsEnquireLoanBalanceSvc_Binder?wsdl
+        soapAction: RACE_SOA_ACCTINFO_enquireLoanBalance_webservices_provider_wsEnquireLoanBalanceSvc_Binder_enquireLoanBalance
+      - id: 4
+        creditorAccountType: CACC
+        url: http://172.27.11.150:3032/mockRACE_SOA_ACCTINFO_getDepAcctBalance_webservices_getDepAcctBalance_Binder?wsdl
+        soapAction: RACE_SOA_ACCTINFO_getDepAcctBalance_webservices_getDepAcctBalance_Binder_getAcctBalanceCA
+      - id: 5
+        creditorAccountType: FUND
+        url: http://172.27.11.150:3032/mockRACE_SOA_PAYMENT_fundsTransfer_webservices_wsFundsTransferSvc_Binder?wsdl
+        soapAction: RACE_SOA_PAYMENT_fundsTransfer_webservices_wsFundsTransferSvc_Binder_fundsTransfer
+      - id: 6
+        creditorAccountType: FCRD
+        url: http://172.27.11.150:3032/mockRACE_SOA_PAYMENT_fpxLcaRefund_webservices_provider_wsFpxLcaRefundSvc_Binder?wsdl
+        soapAction: RACE_SOA_PAYMENT_fpxLcaRefund_webservices_provider_wsFpxLcaRefundSvc_Binder_fpxLcaRefund
