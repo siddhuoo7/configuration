@@ -1,36 +1,44 @@
 server:
   port: 8899
+logging:
+  level:
+    com:
+      ecsfin:
+        pacs: INFO
 spring:
   application:
     name: pacs-service
   data:
     mongodb:
-      authentication-database: admin
       database: pacs-cct
-      host: mongo
-      password: Ecssupport09
-      port: 27017
-      username: admin
-spring.cloud.stream.bindings:
-  pacs-cct-in:
-    destination: pacs.cct
-    consumer.concurrency: 8
-    group: ${spring.application.name}
-  pacs-cct-out:
-    destination: pacs.cct
-    group: ${spring.application.name}
+  cloud.stream.bindings:
+    pacs-cct-in:
+      destination: pacs.cct
+      consumer.concurrency: 8
+      group: ${spring.application.name}
+    pacs-cct-out:
+      destination: pacs.cct
+      group: ${spring.application.name}
+    orch-cct-out:
+      destination: orch.cct
+      group: ${spring.application.name}
+    orch-enq-out:
+      destination: orch.enq
+      group: ${spring.application.name}
 zeebe:
   bpmn:
     cct:
-      file: outbound-CCT.bpmn
-      processId: InitiateCCT
-pacs:
-  cct:
-    suppldata:
-      validator: RPP
+      files: 
+        - Outbound-CCT.bpmn
+        - Inbound-CCT.bpmn
+      incoming:
+        processId: InboundCCTFlow
+      outgoing:
+        processId: InitiateCCT
 ---
 spring:
   profiles: local
-  data:
-    mongodb:
-      host: localhost
+  redis:
+    host: ${REDIS_HOST:192.168.45.23}
+    port: 6379
+    password:
