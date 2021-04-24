@@ -1,93 +1,103 @@
 server:
   port: 8065
-spring:
-  application:
-    name: rpp-processor
-  data:
-    mongodb:
-      authentication-database: admin
-      database: rpp-messages
-      host: mongo
-      password: Ecssupport09
-      port: 27017
-      username: admin
-      auto-index-creation: true      
+  warmup: false
 logging:
   level:
     com:
       ecsfin:
         rpp:
-          processor: INFO
-spring.cloud.stream:
-  bindings:
-    rpp-messages-out:
-      destination: rpp.messages
-      group: ${spring.application.name}
-      producer:
-        partition-key-expression: headers['traceId']
-        partition-count: 16
-    rpp-messages-in:
-      destination: rpp.messages
-      consumer.concurrency: 8
-      group: ${spring.application.name}
-    pacs-cct-in:
-      destination: pacs.cct
-      consumer.concurrency: 8
-      group: ${spring.application.name}
-    pacs-cct-out:
-      destination: pacs.cct
-      group: ${spring.application.name}
-    acc-enq-in:
-      destination: acc.enq
-      consumer.concurrency: 8
-      group: ${spring.application.name}
-    acc-enq-out:
-      destination: acc.enq
-      group: ${spring.application.name}
-    admn-echo-in:
-      destination: admn.echo
-      consumer.concurrency: 8
-      group: ${spring.application.name}
-    admn-echo-out:
-      destination: admn.echo
-      group: ${spring.application.name}
-    admn-signin-in:
-      destination: admn.signin
-      consumer.concurrency: 8
-      group: ${spring.application.name}
-    admn-signin-out:
-      destination: admn.signin
-      group: ${spring.application.name}
-    admn-signout-in:
-      destination: admn.signout
-      consumer.concurrency: 8
-      group: ${spring.application.name}
-    admn-signout-out:
-      destination: admn.signout
-      group: ${spring.application.name}
-  
+          processor: ERROR
+spring:
+  application:
+    name: rpp-processor
+  data:
+    mongodb:
+      database: rpp-messages
+      auto-index-creation: true
+  cloud.stream:
+    bindings:
+      rpp-messages-out:
+        destination: rpp.messages
+        group: ${spring.application.name}
+        producer:
+          partition-key-expression: headers['traceId']
+      rpp-messages-in:
+        destination: rpp.messages
+        consumer.concurrency: 8
+        group: ${spring.application.name}
+      pacs-cct-in:
+        destination: pacs.cct
+        consumer.concurrency: 8
+        group: ${spring.application.name}
+      pacs-cct-out:
+        destination: pacs.cct
+        group: ${spring.application.name}
+      acc-enq-in:
+        destination: acc.enq
+        consumer.concurrency: 8
+        group: ${spring.application.name}
+      acc-enq-out:
+        destination: acc.enq
+        group: ${spring.application.name}
+      admn-echo-in:
+        destination: admn.echo
+        consumer.concurrency: 8
+        group: ${spring.application.name}
+      admn-echo-out:
+        destination: admn.echo
+        group: ${spring.application.name}
+      admn-signin-in:
+        destination: admn.signin
+        consumer.concurrency: 8
+        group: ${spring.application.name}
+      admn-signin-out:
+        destination: admn.signin
+        group: ${spring.application.name}
+      admn-signout-in:
+        destination: admn.signout
+        consumer.concurrency: 8
+        group: ${spring.application.name}
+      admn-signout-out:
+        destination: admn.signout
+        group: ${spring.application.name}
+      orch-echo-out:
+        destination: orch.echo
+        group: ${spring.application.name}
+      orch-signin-out:
+        destination: orch.signin
+        group: ${spring.application.name}
+      orch-signout-out:
+        destination: orch.signout
+        group: ${spring.application.name}
+      latency-msg-out:
+        destination: latency.common
+        group: ${spring.application.name}
 zeebe:
   bpmn:
     echo:
       file: rpp-outbound-echo.bpmn
       processId: EchoWorkflow
+    signIn:
+      file: sign-in.bpmn
+      processId: SignInWorkflow
+    signOff:
+      file: sign-off.bpmn
+      processId: SignOffWorkflow
   job.subscribe.timeout: 1L
-  
-
 rpp:
   connector:
     connections:
       - id: 1
-        host: 52.152.230.42
-        port: 9002
+        host: 192.168.45.24
+        port: 9000
         noOfRetries: 3
         retryInterval: 10000
         connectionName: Primary Connection
         order: 1
         enable: true
       - id: 2
-        host: 52.152.230.42
-        port: 9000
+        host: 192.168.45.24
+        port: 9002
         noOfRetries: 3
         retryInterval: 10000
         connectionName: Secondary Connection
@@ -97,20 +107,17 @@ rpp:
   member:
     bank.id: ARBKMYKL
     centralbank.id: RPPEMYKL
-
+  processor:
+    accEnq:
+      recoTimeout: 5000
+    cct:
+      recoTimeout: 5000
+    clearCache:
+      expiryTime: 300
+      fixed-rate-scheduler: 30000
 ---
 spring:
-  profiles: local
-  data:
-    mongodb:
-      host: localhost
-
-spring.cloud.stream:
-  kafka:
-    binder:
-      brokers:
-        - localhost:9092
-        
+  profiles: local     
 rpp:
   connector:
     connections:
@@ -125,3 +132,92 @@ rpp:
         order: 2
         enable: true
     loadBalancing: false
+---
+spring:
+  profiles: platform
+rpp:
+  connector:
+    connections:
+      - id: 1
+        host: 192.168.45.11
+        port: 9002
+        order: 1
+        enable: true     
+---
+spring:
+  profiles: ofi_dev
+rpp:
+  connector:
+    connections:
+      - id: 1
+        host: 192.168.45.24
+        port: 9000
+        order: 1
+        enable: true
+      - id: 2
+        host: 192.168.45.24
+        port: 9002
+        order: 2
+        enable: true
+    loadBalancing: true        
+---
+spring:
+  profiles: rfi_dev
+rpp:
+  connector:
+    connections:
+      - id: 1
+        host: 192.168.45.24
+        port: 9001
+        order: 1
+        enable: true
+      - id: 2
+        host: 192.168.45.24
+        port: 9003
+        order: 2
+        enable: true
+    loadBalancing: true        
+---    
+spring:
+  profiles: ofi_qa
+rpp:
+  connector:
+    connections:
+      - id: 1
+        host: 172.27.11.131
+        port: 9000
+        order: 1
+        enable: true   
+---    
+spring:
+  profiles: rfi_qa
+rpp:
+  connector:
+    connections:
+      - id: 1
+        host: 172.27.11.131
+        port: 9001
+        order: 1
+        enable: true
+---    
+spring:
+  profiles: ofi_demo
+rpp:
+  connector:
+    connections:
+      - id: 1
+        host: 172.27.11.121
+        port: 9000
+        order: 1
+        enable: true
+---    
+spring:
+  profiles: rfi_demo
+rpp:
+  connector:
+    connections:
+      - id: 1
+        host: 172.27.11.121
+        port: 9001
+        order: 1
+        enable: true
