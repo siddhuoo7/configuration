@@ -53,30 +53,6 @@ message:
     
 ---
 spring:
-  profiles: platform
-message:
-  service:
-    ip: 192.168.45.11
-    port: 30849
-    
----
-spring:
-  profiles: ofi_dev
-message:
-  service:
-    ip: 192.168.45.15
-    port: 30849
-    
----
-spring:
-  profiles: rfi_dev
-message:
-  service:
-    ip: 192.168.45.19
-    port: 30849
-    
----
-spring:
   profiles: ofi_qa
 message:
   service:
@@ -89,20 +65,4 @@ spring:
 message:
   service:
     ip: 172.27.11.135
-    port: 30849
-    
----
-spring:
-  profiles: ofi_demo
-message:
-  service:
-    ip: 172.27.11.81
-    port: 30849
-      
----
-spring:
-  profiles: rfi_demo
-message:
-  service:
-    ip: 172.27.11.121
     port: 30849
