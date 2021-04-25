@@ -12,6 +12,8 @@ spring:
     name: enterprise-integrator
   data:
     mongodb:
+      authentication-database: admin
+      host: mongo      
       database: integrator-messages
     jpa:
       repositories:
