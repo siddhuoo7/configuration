@@ -121,6 +121,7 @@ spring:
   data:
     mongodb:
       host: mongo
+      port: 27017
 rpp:
   connector:
     connections:
@@ -141,6 +142,7 @@ spring:
   data:
     mongodb:
       host: mongo
+      port: 27017      
 rpp:
   connector:
     connections:
