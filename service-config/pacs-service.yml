@@ -11,8 +11,6 @@ spring:
   data:
     mongodb:
       database: pacs-cct
-      authentication-database: admin
-      host: mongo      
   cloud.stream.bindings:
     pacs-cct-in:
       destination: pacs.cct
@@ -44,3 +42,15 @@ spring:
     host: ${REDIS_HOST:192.168.45.23}
     port: 6379
     password:
+---
+spring:
+  profiles: rfi_qa
+  data:
+    mongodb:
+      host: mongo
+---    
+spring:
+  profiles: ofi_qa
+  data:
+    mongodb:
+      host: mongo
