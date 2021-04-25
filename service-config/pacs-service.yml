@@ -11,6 +11,8 @@ spring:
   data:
     mongodb:
       database: pacs-cct
+      authentication-database: admin
+      host: mongo      
   cloud.stream.bindings:
     pacs-cct-in:
       destination: pacs.cct
