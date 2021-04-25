@@ -12,8 +12,6 @@ spring:
     name: enterprise-integrator
   data:
     mongodb:
-      authentication-database: admin
-      host: mongo      
       database: integrator-messages
     jpa:
       repositories:
@@ -101,37 +99,12 @@ spring:
     exclude: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration"
 ---
 spring:
-  profiles: local
+  profiles: ofi_qa,rfi_qa
+  data:
+    mongodb:
+      host: mongo
 mongo:
-  sharding: false  
----
-spring:
-  profiles: rfi_qa
-mongo:
-  sharding: false
----
-spring:
-  profiles: ofi_qa
-mongo:
-  sharding: false
----
-spring:
-  profiles: platform
-mongo:
-  sharding: false
----
-spring:
-  profiles: ofi_demo
-mongo:
-  sharding: false
----
-spring:
-  profiles: rfi_demo
-mongo:
-  sharding: false
----
-spring:
-  profiles: rfi_demo,ofi_demo,ofi_qa,rfi_qa
+  sharding: false      
 eai:
   urls:
     urlDetails:
