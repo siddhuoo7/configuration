@@ -30,13 +30,8 @@ zeebe:
   bpmnProcessId: InitiateCustEnq
 ---
 spring:
-  profiles: rfi_qa
+  profiles: rfi_qa,ofi_qa
   data:
     mongodb:
       host: mongo
----    
-spring:
-  profiles: ofi_qa
-  data:
-    mongodb:
-      host: mongo
+      port: 27017
