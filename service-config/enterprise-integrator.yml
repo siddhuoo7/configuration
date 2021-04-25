@@ -103,6 +103,7 @@ spring:
   data:
     mongodb:
       host: mongo
+      port: 27017      
 mongo:
   sharding: false      
 eai:
