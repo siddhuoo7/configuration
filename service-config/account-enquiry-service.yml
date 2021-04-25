@@ -11,6 +11,8 @@ spring:
   data:
     mongodb:
       database: account-enquiry
+      authentication-database: admin
+      host: mongo      
   cloud.stream:
     bindings:
       acc-enq-out:
