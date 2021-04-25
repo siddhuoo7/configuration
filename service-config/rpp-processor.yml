@@ -13,6 +13,8 @@ spring:
   data:
     mongodb:
       database: rpp-messages
+      authentication-database: admin
+      host: mongo      
       auto-index-creation: true
   cloud.stream:
     bindings:
