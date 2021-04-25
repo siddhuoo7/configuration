@@ -127,8 +127,8 @@ rpp:
         order: 1
         enable: true
       - id: 2
-        host: 40.76.237.71
-        port: 9000
+        host: 40.76.236.205
+        port: 9002
         order: 2
         enable: true
     loadBalancing: true        
@@ -144,8 +144,8 @@ rpp:
         order: 1
         enable: true
       - id: 2
-        host: 40.76.237.71
-        port: 9001
+        host: 40.76.236.205
+        port: 9003
         order: 2
         enable: true
     loadBalancing: true        
