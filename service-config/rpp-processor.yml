@@ -134,8 +134,8 @@ rpp:
         host: 40.76.236.205
         port: 9002
         order: 2
-        enable: true
-    loadBalancing: true
+        enable: false
+    loadBalancing: false
 ---    
 spring:
   profiles: rfi_qa
@@ -155,5 +155,5 @@ rpp:
         host: 40.76.236.205
         port: 9003
         order: 2
-        enable: true
-    loadBalancing: true
+        enable: false
+    loadBalancing: false
