@@ -7,6 +7,10 @@ logging:
       ecsfin:
         rpp:
           processor: INFO
+    root: ERROR
+    org:
+      springframework.web: TRACE      
+    
 spring:
   application:
     name: rpp-processor
