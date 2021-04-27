@@ -5,7 +5,7 @@ logging:
     com:
       ecsfin:
         workflow:
-          cct.inbound: WARN
+          cct.inbound: INFO
 workflow:
   cct:
     outbound:
