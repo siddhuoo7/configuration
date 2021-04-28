@@ -5,7 +5,7 @@ logging:
     com:
       ecsfin:
         workflow:
-          cct.inbound: INFO
+          cct.inbound: DEBUG
 workflow:
   cct:
     outbound:
