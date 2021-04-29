@@ -6,10 +6,11 @@ logging:
     com:
       ecsfin:
         rpp:
-          processor: DEBUG
+          processor: WARN
+          processor.service: DEBUG
     root: ERROR
     org:
-      springframework.web: TRACE      
+      springframework.web: DEBUG
     
 spring:
   application:
