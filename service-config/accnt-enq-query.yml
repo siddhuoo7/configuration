@@ -6,7 +6,7 @@ logging:
       ecsfin:
          service:
           accnt_enq:
-             query: INFO
+             query: WARN
 spring:
   application:
     name: accnt-enq-query
