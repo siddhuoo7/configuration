@@ -4,7 +4,7 @@ logging:
   level:
     com:
       ecsfin:
-        acc_enq: INFO
+        acc_enq: WARN
 spring:
   application:
     name: account-enquiry-service
