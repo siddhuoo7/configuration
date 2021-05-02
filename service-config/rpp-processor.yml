@@ -7,10 +7,9 @@ logging:
       ecsfin:
         rpp:
           processor: WARN
-          processor.service: DEBUG
-    root: ERROR
+    root: WARN
     org:
-      springframework.web: DEBUG
+      springframework.web: WARN
     
 spring:
   application:
