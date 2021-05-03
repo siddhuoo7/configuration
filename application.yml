@@ -6,8 +6,6 @@ logging:
       hibernate: ERROR
       apache:
         kafka: ERROR
-    com:
-      ecsfin: ERROR
 spring:
   main.banner-mode: "off"
   output.ansi.enabled: ALWAYS
