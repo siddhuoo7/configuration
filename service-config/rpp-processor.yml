@@ -7,10 +7,6 @@ logging:
       ecsfin:
         rpp:
           processor: WARN
-    root: WARN
-    org:
-      springframework.web: WARN
-    
 spring:
   application:
     name: rpp-processor
@@ -106,7 +102,7 @@ rpp:
         retryInterval: 10000
         connectionName: Secondary Connection
         order: 2
-        enable: true
+        enable: false
     loadBalancing: false
   member:
     bank.id: ARBKMYKL
