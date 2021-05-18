@@ -42,7 +42,6 @@ spring:
             "replica.socket.receive.buffer.bytes": 16000000
             "fetch.max.wait.ms": 60
             "fetch.min.bytes": 128000
-
             auto.offset.reset: earliest
       default:
         producer:
