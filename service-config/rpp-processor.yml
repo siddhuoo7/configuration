@@ -60,10 +60,10 @@ rpp:
 ---    
 spring:
   profiles: ofi_qa
-  data:
-    mongodb:
-      host: mongo
-      port: 27017
+#   data:
+#     mongodb:
+#       host: mongo
+#       port: 27017
 rpp:
   connector:
     connections:
@@ -81,10 +81,10 @@ rpp:
 ---    
 spring:
   profiles: rfi_qa
-  data:
-    mongodb:
-      host: mongo
-      port: 27017      
+#   data:
+#     mongodb:
+#       host: mongo
+#       port: 27017      
 rpp:
   connector:
     connections:
