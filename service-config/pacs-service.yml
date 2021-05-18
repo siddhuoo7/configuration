@@ -11,20 +11,6 @@ spring:
   data:
     mongodb:
       database: pacs-cct
-  cloud.stream.bindings:
-    pacs-cct-in:
-      destination: pacs.cct
-      consumer.concurrency: 8
-      group: ${spring.application.name}
-    pacs-cct-out:
-      destination: pacs.cct
-      group: ${spring.application.name}
-    orch-cct-out:
-      destination: orch.cct
-      group: ${spring.application.name}
-    orch-enq-out:
-      destination: orch.enq
-      group: ${spring.application.name}
 zeebe:
   bpmn:
     cct:
