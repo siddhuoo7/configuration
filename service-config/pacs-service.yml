@@ -28,10 +28,10 @@ spring:
     host: ${REDIS_HOST:192.168.45.23}
     port: 6379
     password:
----
-spring:
-  profiles: rfi_qa,ofi_qa
-  data:
-    mongodb:
-      host: mongo
-      port: 27017
+# ---
+# spring:
+#   profiles: rfi_qa,ofi_qa
+#   data:
+#     mongodb:
+#       host: mongo
+#       port: 27017
