@@ -34,12 +34,15 @@ spring:
           configuration:
             "linger.ms": 20
             "buffer.memory": 33554432
-            "batch.size": 32768
+            "batch.size": 128000
             "compression.type": "snappy"
             "receive.buffer.bytes": 16000000
             "socket.receive.buffer.bytes": 16000000
-            "fetch.max.wait.ms": 20
-            "fetch.min.bytes": 32768
+            "num.replica.fetchers": 3
+            "replica.socket.receive.buffer.bytes": 16000000
+            "fetch.max.wait.ms": 60
+            "fetch.min.bytes": 128000
+
             auto.offset.reset: earliest
       default:
         producer:
@@ -54,6 +57,131 @@ spring:
           headerMode: headers
           autoCommitOffset: true
           autoCommitOnError: true
+        bindings:
+        pacs-cct-in:
+          destination: pacs.cct
+          consumer.concurrency: 2
+          group: ${spring.application.name}
+        pacs-cct-out:
+          destination: pacs.cct
+          group: ${spring.application.name}
+          producer:
+            partition-count: 16
+        pacs-pst-in:
+          destination: pacs.pst
+          consumer.concurrency: 2
+          group: ${spring.application.name}
+        pacs-pst-out:
+          destination: pacs.pst
+          group: ${spring.application.name}
+          producer:
+            partition-count: 16
+        acc-enq-in:
+          destination: acc.enq
+          consumer.concurrency: 4
+          group: ${spring.application.name}
+        acc-enq-out:
+          destination: acc.enq
+          group: ${spring.application.name}
+          producer:
+            partition-count: 32
+        message-out:
+          destination: messages
+          group: ${spring.application.name}
+          producer:
+            partition-key-expression: headers['traceId']
+            partition-count: 32
+        rpp-messages-in:
+          destination: rpp.messages
+          consumer.concurrency: 4
+          group: ${spring.application.name}
+        rpp-messages-out:
+          destination: rpp.messages
+          group: ${spring.application.name}
+          producer:
+            partition-key-expression: headers['traceId']
+            partition-count: 32
+        admn-echo-in:
+          destination: admn.echo
+          consumer.concurrency: 1
+          group: ${spring.application.name}
+        admn-echo-out:
+          destination: admn.echo
+          group: ${spring.application.name}
+          producer:
+            partition-count: 2
+        admn-signin-in:
+          destination: admn.signin
+          consumer.concurrency: 1
+          group: ${spring.application.name}
+        admn-signin-out:
+          destination: admn.signin
+          group: ${spring.application.name}
+          producer:
+            partition-count: 2
+        admn-signout-in:
+          destination: admn.signout
+          consumer.concurrency: 1
+          group: ${spring.application.name}
+        admn-signout-out:
+          destination: admn.signout
+          group: ${spring.application.name}
+          producer:
+            partition-count: 2
+        orch-cct-out:
+          destination: orch.cct
+          group: ${spring.application.name}
+          producer:
+            partition-count: 16
+        orch-cct-in:
+          destination: orch.cct
+          group: ${spring.application.name}
+          consumer.concurrency: 2
+        orch-enq-in:
+          destination: orch.enq
+          group: ${spring.application.name}
+          consumer.concurrency: 2
+        orch-enq-out:
+          destination: orch.enq
+          group: ${spring.application.name}
+          producer:
+            partition-count: 16
+        orch-echo-in:
+          destination: orch.echo
+          consumer.concurrency: 1
+          group: ${spring.application.name}
+        orch-echo-out:
+          destination: orch.echo
+          group: ${spring.application.name}
+          producer:
+            partition-count: 2
+        orch-signin-in:
+          destination: orch.signin
+          consumer.concurrency: 1
+          group: ${spring.application.name}
+        orch-signin-out:
+          destination: orch.signin
+          group: ${spring.application.name}
+          producer:
+            partition-count: 2
+        orch-signout-in:
+          destination: orch.signout
+          consumer.concurrency: 1
+          group: ${spring.application.name}
+        orch-signout-out:
+          destination: orch.signout
+          group: ${spring.application.name}
+          producer:
+            partition-count: 2
+        latency-msg-out:
+          destination: latency.common
+          group: ${spring.application.name}
+          producer:
+            partition-count: 16
+        latency-msg-in:
+          destination: latency.common
+          group: ${spring.application.name}
+          consumer.concurrency: 4
   redis:
     host: redis
     port: 6379
