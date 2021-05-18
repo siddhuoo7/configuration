@@ -14,64 +14,6 @@ spring:
     mongodb:
       database: rpp-messages
       auto-index-creation: true
-  cloud.stream:
-    bindings:
-      rpp-messages-out:
-        destination: rpp.messages
-        group: ${spring.application.name}
-        producer:
-          partition-key-expression: headers['traceId']
-      rpp-messages-in:
-        destination: rpp.messages
-        consumer.concurrency: 8
-        group: ${spring.application.name}
-      pacs-cct-in:
-        destination: pacs.cct
-        consumer.concurrency: 8
-        group: ${spring.application.name}
-      pacs-cct-out:
-        destination: pacs.cct
-        group: ${spring.application.name}
-      acc-enq-in:
-        destination: acc.enq
-        consumer.concurrency: 8
-        group: ${spring.application.name}
-      acc-enq-out:
-        destination: acc.enq
-        group: ${spring.application.name}
-      admn-echo-in:
-        destination: admn.echo
-        consumer.concurrency: 8
-        group: ${spring.application.name}
-      admn-echo-out:
-        destination: admn.echo
-        group: ${spring.application.name}
-      admn-signin-in:
-        destination: admn.signin
-        consumer.concurrency: 8
-        group: ${spring.application.name}
-      admn-signin-out:
-        destination: admn.signin
-        group: ${spring.application.name}
-      admn-signout-in:
-        destination: admn.signout
-        consumer.concurrency: 8
-        group: ${spring.application.name}
-      admn-signout-out:
-        destination: admn.signout
-        group: ${spring.application.name}
-      orch-echo-out:
-        destination: orch.echo
-        group: ${spring.application.name}
-      orch-signin-out:
-        destination: orch.signin
-        group: ${spring.application.name}
-      orch-signout-out:
-        destination: orch.signout
-        group: ${spring.application.name}
-      latency-msg-out:
-        destination: latency.common
-        group: ${spring.application.name}
 zeebe:
   bpmn:
     echo:
