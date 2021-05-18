@@ -28,10 +28,10 @@ zeebe:
     - outbound-AccEnq.bpmn
     - Inbound-AccEnq.bpmn
   bpmnProcessId: InitiateCustEnq
----
-spring:
-  profiles: rfi_qa,ofi_qa
-  data:
-    mongodb:
+# ---
+# spring:
+#   profiles: rfi_qa,ofi_qa
+#   data:
+#     mongodb:
       host: mongo
       port: 27017
