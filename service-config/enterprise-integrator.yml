@@ -31,32 +31,6 @@ spring:
     properties:
       hibernate.jdbc.lob.non_contextual_creation: true
       #hibernate.default_schema: intgdb
-  cloud:
-    stream:
-     bindings:
-       pacs-cct-in:
-        destination: pacs.cct
-        consumer.concurrency: 8
-        group: ${spring.application.name}
-       pacs-cct-out:
-        destination: pacs.cct
-        group: ${spring.application.name}
-       acc-enq-in:
-        destination: acc.enq
-        consumer.concurrency: 8
-        group: ${spring.application.name}
-       acc-enq-out:
-        destination: acc.enq
-        group: ${spring.application.name}
-       message-out:
-        destination: messages
-        producer:
-          partition-key-expression: headers['traceId']
-        group: ${spring.application.name}
-       message-in:
-        destination: messages
-        group: ${spring.application.name}
-        
 timeOutSec: 20
 slpTimeinMS: 1000
 
