@@ -46,7 +46,6 @@ spring:
       default:
         producer:
           partitionKeyExpression: headers['traceId']
-          partitionCount: 16
           errorChannelEnabled: true
           headerMode: headers
         consumer:
@@ -56,7 +55,7 @@ spring:
           headerMode: headers
           autoCommitOffset: true
           autoCommitOnError: true
-        bindings:
+      bindings:
         pacs-cct-in:
           destination: pacs.cct
           consumer.concurrency: 2
