@@ -1,0 +1,27 @@
+server:
+  port: 9797
+logging:
+  level:
+    root: ERROR
+    org:
+      springframework.web: ERROR
+      hibernate: ERROR
+      apache:
+        kafka: ERROR
+    com:
+      ecsfin:
+        latency: ERROR
+spring:
+  application:
+    name: latency-service
+  main:
+    allow-bean-definition-overriding: true
+  output.ansi.enabled: ALWAYS
+  sleuth: 
+    sampler: 
+      probability: 1.0
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+    time-zone: UTC
+  lifecycle:
+    timeout-per-shutdown-phase: 1m
