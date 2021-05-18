@@ -175,11 +175,11 @@ spring:
           destination: latency.common
           group: ${spring.application.name}
           producer:
-            partition-count: 16
+            partition-count: 8
         latency-msg-in:
           destination: latency.common
           group: ${spring.application.name}
-          consumer.concurrency: 4
+          consumer.concurrency: 8
   redis:
     host: redis
     port: 6379
