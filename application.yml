@@ -270,4 +270,4 @@ spring:
   data:
     mongodb:
       host: mongo
-      port: 60000
+      port: 27017
