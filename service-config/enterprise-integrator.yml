@@ -74,10 +74,10 @@ spring:
 ---
 spring:
   profiles: ofi_qa,rfi_qa
-  data:
-    mongodb:
-      host: mongo
-      port: 27017      
+#   data:
+#     mongodb:
+#       host: mongo
+#       port: 27017      
 mongo:
   sharding: false      
 eai:
