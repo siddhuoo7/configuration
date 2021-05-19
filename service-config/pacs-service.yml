@@ -4,7 +4,7 @@ logging:
   level:
     com:
       ecsfin:
-        pacs: DEBUG
+        pacs: INFO
 spring:
   application:
     name: pacs-service
