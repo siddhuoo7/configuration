@@ -6,7 +6,7 @@ logging:
       ecsfin:
         service:
           enterprise:
-            integrator: WARN
+            integrator: INFO
 spring:
   application:
     name: enterprise-integrator
