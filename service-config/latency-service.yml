@@ -1,13 +1,6 @@
 server:
   port: 9797
 logging:
-  level:
-    root: ERROR
-    org:
-      springframework.web: ERROR
-      hibernate: ERROR
-      apache:
-        kafka: ERROR
     com:
       ecsfin:
         latency: ERROR
