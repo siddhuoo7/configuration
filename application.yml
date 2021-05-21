@@ -58,7 +58,7 @@ spring:
       bindings:
         pacs-cct-in:
           destination: pacs.cct
-          consumer.concurrency: 2
+          consumer.concurrency: 4
           group: ${spring.application.name}
         pacs-cct-out:
           destination: pacs.cct
@@ -67,7 +67,7 @@ spring:
             partition-count: 16
         pacs-pst-in:
           destination: pacs.pst
-          consumer.concurrency: 2
+          consumer.concurrency: 4
           group: ${spring.application.name}
         pacs-pst-out:
           destination: pacs.pst
@@ -91,7 +91,7 @@ spring:
             partition-count: 32
         rpp-messages-in:
           destination: rpp.messages
-          consumer.concurrency: 4
+          consumer.concurrency: 8
           group: ${spring.application.name}
         rpp-messages-out:
           destination: rpp.messages
@@ -134,11 +134,11 @@ spring:
         orch-cct-in:
           destination: orch.cct
           group: ${spring.application.name}
-          consumer.concurrency: 2
+          consumer.concurrency: 4
         orch-enq-in:
           destination: orch.enq
           group: ${spring.application.name}
-          consumer.concurrency: 2
+          consumer.concurrency: 4
         orch-enq-out:
           destination: orch.enq
           group: ${spring.application.name}
