@@ -4,8 +4,7 @@ logging:
   level:
     com:
       ecsfin:
-        workflow:
-          cct.inbound: INFO
+        workflow: INFO
 workflow:
   cct:
     outbound:
