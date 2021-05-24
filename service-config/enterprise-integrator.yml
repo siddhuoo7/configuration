@@ -4,10 +4,10 @@ logging:
   level:
     com:
       ecsfin:
+        library: DEBUG
         service:
           enterprise:
             integrator: ERROR
-        library: DEBUG
 spring:
   application:
     name: enterprise-integrator
