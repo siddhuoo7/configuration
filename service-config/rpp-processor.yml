@@ -6,7 +6,7 @@ logging:
     com:
       ecsfin:
         rpp:
-          processor: INFO
+          processor: ERROR
 spring:
   application:
     name: rpp-processor
