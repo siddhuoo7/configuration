@@ -4,7 +4,7 @@ logging:
   level:
     com:
       ecsfin:
-        pacs: INFO
+        pacs: ERROR
 spring:
   application:
     name: pacs-service
