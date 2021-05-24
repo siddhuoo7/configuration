@@ -6,7 +6,7 @@ logging:
       ecsfin:
         service:
           enterprise:
-            integrator: ERROR
+            integrator: DEBUG
 spring:
   application:
     name: enterprise-integrator
