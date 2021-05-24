@@ -4,7 +4,7 @@ logging:
   level:
     com:
       ecsfin:
-        workflow: INFO
+        workflow: ERROR
 workflow:
   cct:
     outbound:
