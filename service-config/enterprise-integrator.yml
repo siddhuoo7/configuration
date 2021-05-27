@@ -4,7 +4,7 @@ logging:
   level:
     com:
       ecsfin:
-        library: DEBUG
+        library: INFO
         service:
           enterprise:
             integrator: INFO
