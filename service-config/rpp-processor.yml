@@ -14,6 +14,9 @@ spring:
     mongodb:
       database: rpp-messages
       auto-index-creation: true
+  redis:
+    host: rpp-redis
+    port: 6379
 zeebe:
   bpmn:
     echo:
