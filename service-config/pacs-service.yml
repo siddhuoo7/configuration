@@ -11,6 +11,9 @@ spring:
   data:
     mongodb:
       database: pacs-cct
+  redis:
+    host: pacs-redis
+    port: 6379
 zeebe:
   bpmn:
     cct:
